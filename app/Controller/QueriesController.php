@@ -26,4 +26,18 @@ class QueriesController extends AppController{
 			}
 		}
 	}
+	public function delete($id){
+		$associatedtasks=$this->Tasks->find(string $type="all",
+				 array $params = array(
+					'condition'=>('query_id'=$$id)
+				)
+			);
+		if($associatedtasks==array()){
+			$this->Query->delete($id);
+			$this->Session->flash("Success!");
+		}
+		else{
+			$this->Session->flash("Can't delete category if tasks still exist with that category");
+		}
+	}
 }
