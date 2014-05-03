@@ -3,7 +3,6 @@
 	<fieldset>
 		<legend><?php echo __('Add Query'); ?></legend>
 	<?php
-		echo $this->Form->input('user_id');
 		echo $this->Form->input('name');
 	?>
 	</fieldset>
