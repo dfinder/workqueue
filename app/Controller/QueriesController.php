@@ -29,15 +29,22 @@ class QueriesController extends AppController{
 	public function delete($id){
 		$associatedtasks=$this->Tasks->find(string $type="all",
 				 array $params = array(
-					'condition'=>('query_id'=$$id)
+					'condition'=>('query_id'=>$id)
 				)
 			);
+		$query=$this->Query->find(string $type="first",
+			 array $params = array('condition'=>('id'=$id)));
+		$user_id=$this->Auth->user("id");
 		if($associatedtasks==array()){
-			$this->Query->delete($id);
-			$this->Session->flash("Success!");
+			if($user_id==$query['Query']['user_id']){
+				$this->Query->delete($id);
+				$this->Session->flash("Success!");
+			}else{
+				$this->Session->flash("This isn't your query");
+			}
 		}
 		else{
-			$this->Session->flash("Can't delete category if tasks still exist with that category");
+			$this->Session->flash("Can't delete query if tasks are still associated with it");
 		}
 	}
 }
