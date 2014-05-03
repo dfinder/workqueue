@@ -14,11 +14,16 @@ class QueriesController extends AppController{
 			$this->
 		if ($this->request->is('post')){
 				if($this->Query->Task->saveMany($this->request->data)){
-					$this-Session->flash
+					$this-Session->flash("Saved!")
 			}
 		}
 	}
 	public function add(){
-
+		if ($this->request->is('post')){
+			$this->request->data['query']['user_id']=$this->Auth->user("id");					
+			if($this->Query->save($this->request->data)){
+					$this-Session->flash("Saved!")
+			}
+		}
 	}
 }
